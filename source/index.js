@@ -48,4 +48,4 @@ module.exports = function(project) {
   return analyze(project.form, empty, []);
 };
 
-module.exports.version = '0.0.1';
+module.exports.version = '0.1.0';
