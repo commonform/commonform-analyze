@@ -1,0 +1,3 @@
+--check-leaks
+--inline-diffs
+--recursive
