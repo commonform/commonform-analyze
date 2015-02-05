@@ -192,4 +192,46 @@ describe('analyze', function() {
         });
     });
   });
+
+  describe('of fields', function() {
+    it('produces an object', function() {
+      expect(precompute(testProject(['test'])).fields)
+        .to.be.an('object');
+    });
+
+    it('reports fields made', function() {
+      expect(precompute(testProject([
+        {field: 'Seller'}
+      ])).fields)
+        .to.eql({Seller: [['content', 0]]});
+    });
+
+    it('reports nested fields', function() {
+      expect(precompute(testProject([
+        {
+          form: {
+            content: [
+              {field: 'Seller'}
+            ]
+          }
+        }
+      ])).fields)
+        .to.eql({
+          Seller: [['content', 0, 'form', 'content', 0]]
+        });
+    });
+
+    it('reports multiple fields', function() {
+      expect(precompute(testProject([
+        {field: 'Seller'},
+        {field: 'Seller'}
+      ])).fields)
+        .to.eql({
+          Seller: [
+            ['content', 0],
+            ['content', 1]
+          ]
+        });
+    });
+  });
 });

@@ -25,6 +25,10 @@ var analyze = function recurse(form, result, path) {
       elementPath = path.concat('content', index);
       target = element.reference;
       pushToKeyList(result, 'references', target, elementPath);
+    } else if (validate.field(element)) {
+      elementPath = path.concat('content', index);
+      target = element.field;
+      pushToKeyList(result, 'fields', target, elementPath);
     } else if (validate.nestedSubForm(element)) {
       elementPath = path.concat('content', index);
       if (element.hasOwnProperty('summary')) {
@@ -43,7 +47,8 @@ module.exports = function(project) {
     definitions: {},
     uses: {},
     summaries: {},
-    references: {}
+    references: {},
+    fields: {}
   };
   return analyze(project.form, empty, []);
 };
