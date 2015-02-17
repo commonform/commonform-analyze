@@ -6,7 +6,7 @@
   },
   "description": "analyze the relationships within a Common Form form",
   "dependencies": {
-    "commonform-validate": "commonform/commonform-validate"
+    "immutable": "^3.6.2"
   },
   "devDependencies": {
     "chai": "^1.10.0",

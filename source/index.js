@@ -1,56 +1,65 @@
-var validate = require('commonform-validate');
+var Immutable = require('immutable');
 
-var pushToKeyList = function(result, type, key, path) {
-  var set = result[type];
-  if (set.hasOwnProperty(key)) {
-    set[key].push(path);
+var withPath = function(result, type, key, path) {
+  var keyPath = [type, key];
+  if (result.hasIn(keyPath)) {
+    return result.updateIn(keyPath, function(paths) {
+      return paths.push(path);
+    });
   } else {
-    set[key] = [path];
+    return result.setIn(keyPath, Immutable.List([path]));
   }
 };
 
+var propertyNames = Immutable.List([
+  'definition', 'field', 'reference', 'use'
+]);
+
 var analyze = function recurse(form, result, path) {
-  form.content.forEach(function(element, index) {
+  return form.get('content').reduce(function(result, element, index) {
     var elementPath;
     var target;
-    if (validate.definition(element)) {
-      elementPath = path.concat('content', index);
-      target = element.definition;
-      pushToKeyList(result, 'definitions', target, elementPath);
-    } else if (validate.use(element)) {
-      elementPath = path.concat('content', index);
-      target = element.use;
-      pushToKeyList(result, 'uses', target, elementPath);
-    } else if (validate.reference(element)) {
-      elementPath = path.concat('content', index);
-      target = element.reference;
-      pushToKeyList(result, 'references', target, elementPath);
-    } else if (validate.field(element)) {
-      elementPath = path.concat('content', index);
-      target = element.field;
-      pushToKeyList(result, 'fields', target, elementPath);
-    } else if (validate.nestedSubForm(element)) {
-      elementPath = path.concat('content', index);
-      if (element.hasOwnProperty('summary')) {
-        var summary = element.summary;
-        pushToKeyList(result, 'summaries', summary, elementPath);
+    var plural;
+    if (typeof element === 'string') {
+      return result;
+    } else {
+      var name = propertyNames.find(function(name) {
+        return element.has(name);
+      });
+      if (name) {
+        plural = name + 's';
+        elementPath = path.push('content', index);
+        target = element.get(name);
+        return withPath(result, plural, target, elementPath);
+      } else if (element.has('form')) {
+        elementPath = path.push('content', index);
+        if (element.has('summary')) {
+          var summary = element.get('summary');
+          result = withPath(result, 'summaries', summary, elementPath);
+        }
+        var contentPath = elementPath.push('form');
+        return recurse(element.get('form'), result, contentPath);
+      } else {
+        throw new Error('Invalid form content object');
       }
-      var contentPath = elementPath.concat('form');
-      recurse(element.form, result, contentPath);
     }
-  });
-  return result;
+  }, result);
 };
 
-module.exports = function(project) {
-  var empty = {
-    definitions: {},
-    uses: {},
-    summaries: {},
-    references: {},
-    fields: {}
-  };
-  return analyze(project.form, empty, []);
+var emptyMap = Immutable.Map();
+
+var resultsTemplate = Immutable.Map({
+  definitions: emptyMap,
+  uses: emptyMap,
+  summaries: emptyMap,
+  references: emptyMap,
+  fields: emptyMap
+});
+
+var rootPath = Immutable.List();
+
+module.exports = function(form) {
+  return analyze(form, resultsTemplate, rootPath);
 };
 
 module.exports.version = '0.1.1';
