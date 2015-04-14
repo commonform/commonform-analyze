@@ -1,44 +1,45 @@
-var Immutable = require('immutable');
+var predicate = require('commonform-predicate');
+var find = require('array-find');
 
 var withPath = function(result, type, key, path) {
-  var keyPath = [type, key];
-  if (result.hasIn(keyPath)) {
-    return result.updateIn(keyPath, function(paths) {
-      return paths.push(path);
-    });
+  var hasType = result.hasOwnProperty(type);
+  if (hasType && result[type].hasOwnProperty(key)) {
+    result[type][key].push(path);
   } else {
-    return result.setIn(keyPath, Immutable.List([path]));
+    if (!hasType) {
+      result[type] = {};
+    }
+    result[type][key] = [path];
   }
+  return result;
 };
 
-var propertyNames = Immutable.List([
-  'definition', 'field', 'reference', 'use'
-]);
+var propertyNames = ['definition', 'field', 'reference', 'use'];
 
 var analyze = function recurse(form, result, path) {
-  return form.get('content').reduce(function(result, element, index) {
+  return form.content.reduce(function(result, element, index) {
     var elementPath;
     var target;
     var plural;
-    if (typeof element === 'string') {
+    if (predicate.text(element)) {
       return result;
     } else {
-      var name = propertyNames.find(function(name) {
-        return element.has(name);
+      var name = find(propertyNames, function(name) {
+        return element.hasOwnProperty(name);
       });
       if (name) {
         plural = name + 's';
-        elementPath = path.push('content', index);
-        target = element.get(name);
+        elementPath = path.concat(['content', index]);
+        target = element[name];
         return withPath(result, plural, target, elementPath);
-      } else if (element.has('form')) {
-        elementPath = path.push('content', index);
-        if (element.has('summary')) {
-          var summary = element.get('summary');
-          result = withPath(result, 'summaries', summary, elementPath);
+      } else if (predicate.child(element)) {
+        elementPath = path.concat(['content', index]);
+        if (element.hasOwnProperty('heading')) {
+          var heading = element.heading;
+          result = withPath(result, 'headings', heading, elementPath);
         }
-        var contentPath = elementPath.push('form');
-        return recurse(element.get('form'), result, contentPath);
+        var contentPath = elementPath.concat(['form']);
+        return recurse(element.form, result, contentPath);
       } else {
         throw new Error('Invalid form content object');
       }
@@ -46,20 +47,18 @@ var analyze = function recurse(form, result, path) {
   }, result);
 };
 
-var emptyMap = Immutable.Map();
-
-var resultsTemplate = Immutable.Map({
-  definitions: emptyMap,
-  uses: emptyMap,
-  summaries: emptyMap,
-  references: emptyMap,
-  fields: emptyMap
-});
-
-var rootPath = Immutable.List();
-
 module.exports = function(form) {
-  return analyze(form, resultsTemplate, rootPath);
+  return analyze(
+    form,
+    {
+      definitions: {},
+      uses: {},
+      headings: {},
+      references: {},
+      fields: {}
+    },
+    []
+  );
 };
 
-module.exports.version = '0.2.0';
+module.exports.version = '1.0.0-rc1';

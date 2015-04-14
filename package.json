@@ -1,12 +1,11 @@
 {
+  "name": "commonform-analyze",
+  "description": "analyze the relationships within a Common Form form",
+  "version": "1.0.0-rc1",
   "author": {
     "name": "Kyle E. Mitchell",
     "email": "kyle@kemitchell.com",
     "url": "http://kemitchell.com/"
-  },
-  "description": "analyze the relationships within a Common Form form",
-  "dependencies": {
-    "immutable": "^3.6.2"
   },
   "devDependencies": {
     "chai": "^1.10.0",
@@ -26,7 +25,6 @@
   ],
   "license": "Apache-2.0",
   "main": "source/index",
-  "name": "commonform-analyze",
   "repository": {
     "type": "git",
     "url": "https://github.com/commonform/commonform-analyze.git"
@@ -39,5 +37,7 @@
     "test": "mocha",
     "travis-ci": "npm run pre-commit"
   },
-  "version": "0.2.0"
+  "dependencies": {
+    "array-find": "^0.1.1"
+  }
 }
