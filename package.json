@@ -1,7 +1,7 @@
 {
   "name": "commonform-analyze",
   "description": "analyze the relationships within a Common Form form",
-  "version": "1.0.0-rc1",
+  "version": "0.4.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "dependencies": {
     "array-find": "^0.1.1",
