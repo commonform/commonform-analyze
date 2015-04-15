@@ -24,12 +24,12 @@
     "markup"
   ],
   "license": "Apache-2.0",
-  "main": "commonform-analyze.js",
+  "main": "source/index",
   "repository": "commonform/commonform-analyze",
   "scripts": {
     "check": "check-versions --check-module",
     "coverage": "istanbul cover _mocha && istanbul check-coverage coverage/coverage.json",
-    "lint": "jshint commonform-analyze.js test && jscs commonform-analyze.js test",
+    "lint": "jshint source test && jscs source test",
     "pre-commit": "npm run lint && npm run check && npm run coverage",
     "test": "mocha",
     "travis-ci": "npm run pre-commit"
