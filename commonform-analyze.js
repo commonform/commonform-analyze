@@ -6,9 +6,6 @@ var withPath = function(result, type, key, path) {
   if (hasType && result[type].hasOwnProperty(key)) {
     result[type][key].push(path);
   } else {
-    if (!hasType) {
-      result[type] = {};
-    }
     result[type][key] = [path];
   }
   return result;
