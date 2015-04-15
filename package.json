@@ -1,6 +1,6 @@
 {
   "name": "commonform-analyze",
-  "description": "analyze the relationships within a Common Form form",
+  "description": "analyze relationships within Common Forms",
   "version": "0.4.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "dependencies": {
