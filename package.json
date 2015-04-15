@@ -2,14 +2,14 @@
   "name": "commonform-analyze",
   "description": "analyze the relationships within a Common Form form",
   "version": "1.0.0-rc1",
-  "author": {
-    "name": "Kyle E. Mitchell",
-    "email": "kyle@kemitchell.com",
-    "url": "http://kemitchell.com/"
+  "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
+  "dependencies": {
+    "array-find": "^0.1.1",
+    "commonform-predicate": "^0.4.0"
   },
   "devDependencies": {
-    "chai": "^1.10.0",
-    "check-versions": "0.0.1",
+    "chai": "^2.2.0",
+    "check-versions": "^1.0.0",
     "istanbul": "^0.3.5",
     "jscs": "^1.8.1",
     "jshint": "^2.5.10",
@@ -24,20 +24,14 @@
     "markup"
   ],
   "license": "Apache-2.0",
-  "main": "source/index",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/commonform/commonform-analyze.git"
-  },
+  "main": "commonform-analyze.js",
+  "repository": "commonform/commonform-analyze",
   "scripts": {
     "check": "check-versions --check-module",
     "coverage": "istanbul cover _mocha && istanbul check-coverage coverage/coverage.json",
-    "lint": "jshint source test && jscs source test",
+    "lint": "jshint commonform-analyze.js test && jscs commonform-analyze.js test",
     "pre-commit": "npm run lint && npm run check && npm run coverage",
     "test": "mocha",
     "travis-ci": "npm run pre-commit"
-  },
-  "dependencies": {
-    "array-find": "^0.1.1"
   }
 }
