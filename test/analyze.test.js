@@ -193,43 +193,43 @@ describe('analyze', function() {
     });
   });
 
-  describe('of fields', function() {
+  describe('of blanks', function() {
     it('produces an object', function() {
       expect(
         analyze({content: ['test']})
-          .fields
+          .blanks
       ).to.be.an('object');
     });
 
-    it('reports fields made', function() {
+    it('reports blanks made', function() {
       expect(
         analyze({
           content: [
-            {field: 'Seller'}]})
-          .fields
+            {blank: 'Seller'}]})
+          .blanks
       ).to.eql({Seller: [['content', 0]]});
     });
 
-    it('reports nested fields', function() {
+    it('reports nested blanks', function() {
       expect(
         analyze({
           content: [
             {
               form: {
                 content: [
-                  {field: 'Seller'}]}}]})
-          .fields
+                  {blank: 'Seller'}]}}]})
+          .blanks
       ).to.eql({
         Seller: [['content', 0, 'form', 'content', 0]]});
     });
 
-    it('reports multiple fields', function() {
+    it('reports multiple blanks', function() {
       expect(
         analyze({
           content: [
-            {field: 'Seller'},
-            {field: 'Seller'}]})
-          .fields
+            {blank: 'Seller'},
+            {blank: 'Seller'}]})
+          .blanks
       ).to.eql({
         Seller: [
           ['content', 0],

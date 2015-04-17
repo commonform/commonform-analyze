@@ -11,7 +11,7 @@ var withPath = function(result, type, key, path) {
   return result;
 };
 
-var propertyNames = ['definition', 'field', 'reference', 'use'];
+var propertyNames = ['definition', 'blank', 'reference', 'use'];
 
 var analyze = function recurse(form, result, path) {
   return form.content.reduce(function(result, element, index) {
@@ -52,7 +52,7 @@ module.exports = function(form) {
       uses: {},
       headings: {},
       references: {},
-      fields: {}
+      blanks: {}
     },
     []
   );
