@@ -58,4 +58,4 @@ module.exports = function(form) {
   );
 };
 
-module.exports.version = '0.4.0';
+module.exports.version = '0.4.1';
