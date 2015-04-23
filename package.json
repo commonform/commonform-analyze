@@ -3,6 +3,7 @@
   "description": "analyze relationships within Common Forms",
   "version": "0.4.1",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
+  "bugs": "https://github.com/commonform/commonform-analyze/issues",
   "dependencies": {
     "array-find": "^0.1.1",
     "commonform-predicate": "^0.4.0"
