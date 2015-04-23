@@ -34,8 +34,7 @@
     "check": "check-versions --check-module",
     "coverage": "istanbul cover _mocha && istanbul check-coverage coverage/coverage.json",
     "lint": "jshint source test && jscs source test",
-    "pre-commit": "npm run lint && npm run check && npm run coverage",
-    "test": "mocha",
-    "travis-ci": "npm run pre-commit"
+    "pre-commit": "npm run check && npm run lint && npm run coverage",
+    "test": "mocha"
   }
 }
