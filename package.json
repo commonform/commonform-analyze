@@ -32,9 +32,10 @@
   "repository": "commonform/commonform-analyze",
   "scripts": {
     "check": "check-versions --check-module",
-    "coverage": "istanbul cover _mocha && istanbul check-coverage coverage/coverage.json",
-    "lint": "jshint source test && jscs source test",
-    "pre-commit": "npm run check && npm run lint && npm run coverage",
-    "test": "mocha"
+    "coverage": "istanbul check-coverage --config .dotfiles/istanbul.yml coverage/coverage.json",
+    "lint": "jshint --config .dotfiles/jshint.json source test && jscs --config .dotfiles/jscs.json source test",
+    "precommit": "npm run check && npm run lint && npm run coverage",
+    "precoverage": "istanbul cover --config .dotfiles/istanbul.yml -- _mocha --opts .dotfiles/mocha.opts",
+    "test": "mocha --opts .dotfiles/mocha.opts"
   }
 }
