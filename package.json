@@ -9,8 +9,8 @@
     "commonform-predicate": "^0.4.0"
   },
   "devDependencies": {
-    "covert": "1.1.0",
-    "tape": "4.0.0"
+    "defence-cli": "~1.0.1",
+    "replace-require-self": "~1.0.0"
   },
   "homepage": "https://github.com/commonform/commonform-analyze",
   "keywords": [
@@ -26,8 +26,6 @@
   },
   "repository": "commonform/commonform-analyze",
   "scripts": {
-    "coverage": "covert test/*.test.js",
-    "precommit": "npm run coverage",
-    "test": "tape test/*.test.js"
+    "test": "defence README.md | replace-require-self | node"
   }
 }
