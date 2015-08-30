@@ -1,59 +1,48 @@
-var predicate = require('commonform-predicate');
-var find = require('array-find');
+var predicate = require('commonform-predicate')
+var find = require('array-find')
 
 var withPath = function(result, type, key, path) {
-  var hasType = result.hasOwnProperty(type);
+  var hasType = result.hasOwnProperty(type)
   if (hasType && result[type].hasOwnProperty(key)) {
-    result[type][key].push(path);
-  } else {
-    result[type][key] = [path];
-  }
-  return result;
-};
+    result[type][key].push(path) }
+  else {
+    result[type][key] = [path] }
+  return result }
 
-var propertyNames = ['definition', 'blank', 'reference', 'use'];
+var propertyNames = [ 'definition', 'blank', 'reference', 'use' ]
 
 var analyze = function recurse(form, result, path) {
   return form.content.reduce(function(result, element, index) {
-    var elementPath;
-    var target;
-    var plural;
+    var elementPath
+    var target
+    var plural
     if (predicate.text(element)) {
-      return result;
-    } else {
+      return result }
+    else {
       var name = find(propertyNames, function(name) {
-        return element.hasOwnProperty(name);
-      });
+        return element.hasOwnProperty(name) })
       if (name) {
-        plural = name + 's';
-        elementPath = path.concat(['content', index]);
-        target = element[name];
-        return withPath(result, plural, target, elementPath);
-      } else if (predicate.child(element)) {
-        elementPath = path.concat(['content', index]);
+        plural = name + 's'
+        elementPath = path.concat(['content', index])
+        target = element[name]
+        return withPath(result, plural, target, elementPath) }
+      else if (predicate.child(element)) {
+        elementPath = path.concat(['content', index])
         if (element.hasOwnProperty('heading')) {
-          var heading = element.heading;
-          result = withPath(result, 'headings', heading, elementPath);
-        }
-        var contentPath = elementPath.concat(['form']);
-        return recurse(element.form, result, contentPath);
-      } else {
-        throw new Error('Invalid form content object');
-      }
-    }
-  }, result);
-};
+          var heading = element.heading
+          result = withPath(result, 'headings', heading, elementPath) }
+        var contentPath = elementPath.concat(['form'])
+        return recurse(element.form, result, contentPath) }
+      else {
+        throw new Error('Invalid form content object') } } },
+  result) }
 
 module.exports = function(form) {
   return analyze(
     form,
-    {
-      definitions: {},
-      uses: {},
-      headings: {},
-      references: {},
-      blanks: {}
-    },
-    []
-  );
-};
+    { definitions: { },
+      uses: { },
+      headings: { },
+      references: { },
+      blanks: { } },
+    [ ]) }
