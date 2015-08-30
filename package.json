@@ -10,8 +10,6 @@
   },
   "devDependencies": {
     "covert": "1.1.0",
-    "jscs": "^1.8.1",
-    "jshint": "^2.5.10",
     "tape": "4.0.0"
   },
   "homepage": "https://github.com/commonform/commonform-analyze",
@@ -30,8 +28,7 @@
   "repository": "commonform/commonform-analyze",
   "scripts": {
     "coverage": "covert test/*.test.js",
-    "lint": "jshint source test && jscs source test",
-    "precommit": "npm run lint && npm run coverage",
+    "precommit": "npm run coverage",
     "test": "tape test/*.test.js"
   }
 }
