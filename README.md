@@ -1,11 +1,11 @@
 ```javascript
 var analyze = require('commonform-analyze')
-var assert = require('assert')
 ```
 
 # Blanks
 
 ```javascript
+var assert = require('assert')
 assert.deepEqual(
   analyze({ content: [ { blank: 'Seller' } ] })
     .blanks,
