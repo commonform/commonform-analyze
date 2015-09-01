@@ -21,9 +21,6 @@
     "markup"
   ],
   "license": "Apache-2.0",
-  "peerDependencies": {
-    "commonform": "1.x"
-  },
   "repository": "commonform/commonform-analyze",
   "scripts": {
     "test": "defence README.md | replace-require-self | node"
