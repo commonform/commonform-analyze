@@ -1,7 +1,7 @@
 {
   "name": "commonform-analyze",
   "description": "analyze relationships within Common Forms",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "bugs": "https://github.com/commonform/commonform-analyze/issues",
   "dependencies": {
