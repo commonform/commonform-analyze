@@ -10,7 +10,8 @@
   },
   "devDependencies": {
     "defence-cli": "~1.0.1",
-    "replace-require-self": "~1.0.0"
+    "replace-require-self": "~1.0.0",
+    "standard": "^8.0.0"
   },
   "homepage": "https://github.com/commonform/commonform-analyze",
   "keywords": [
@@ -23,6 +24,7 @@
   "license": "Apache-2.0",
   "repository": "commonform/commonform-analyze",
   "scripts": {
-    "test": "defence README.md | replace-require-self | node"
+    "test": "defence README.md | replace-require-self | node",
+    "lint": "standard"
   }
 }
