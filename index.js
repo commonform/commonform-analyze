@@ -40,7 +40,10 @@ var analyze = function recurse (form, result, path) {
       var name = find(propertyNames, function (name) {
         return element.hasOwnProperty(name)
       })
-      if (name) {
+      if (name && name === 'blank') {
+        result.blanks.push(path.concat(['content', index]))
+        return result
+      } else if (name) {
         plural = name + 's'
         elementPath = path.concat(['content', index])
         target = element[name]
@@ -68,7 +71,7 @@ module.exports = function (form) {
       uses: {},
       headings: {},
       references: {},
-      blanks: {}
+      blanks: []
     },
     []
   )

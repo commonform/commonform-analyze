@@ -7,23 +7,23 @@ var analyze = require('commonform-analyze')
 ```javascript
 var assert = require('assert')
 assert.deepEqual(
-  analyze({content: [{blank: 'Seller'}]})
-    .blanks,
-  {Seller: [['content', 0]]},
+  analyze({content: [{blank: ''}]})
+  .blanks,
+  [['content', 0]],
   'reports blanks made'
 )
 
 assert.deepEqual(
-  analyze({content: [{form: {content: [{blank: 'Seller'}]}}]})
-    .blanks,
-  {Seller: [['content', 0, 'form', 'content', 0]]},
+  analyze({content: [{form: {content: [{blank: ''}]}}]})
+  .blanks,
+  [['content', 0, 'form', 'content', 0]],
   'reports nested blanks'
 )
 
 assert.deepEqual(
-  analyze({content: [{blank: 'Date'}, {blank: 'Date'}]})
+  analyze({content: [{blank: ''}, {blank: ''}]})
   .blanks,
-  {Date: [['content', 0], ['content', 1]]},
+  [['content', 0], ['content', 1]],
   'reports multiple blanks'
 )
 
