@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
  */
 
+var clone = require('stringify-clone')
 var predicate = require('commonform-predicate')
 var find = require('array-find')
 
@@ -34,6 +35,7 @@ var analyze = function recurse (form, result, path) {
     var elementPath
     var target
     var plural
+    var heading
     if (predicate.text(element)) {
       return result
     } else {
@@ -51,11 +53,31 @@ var analyze = function recurse (form, result, path) {
       } else if (predicate.child(element)) {
         elementPath = path.concat(['content', index])
         if (element.hasOwnProperty('heading')) {
-          var heading = element.heading
+          heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
         var contentPath = elementPath.concat(['form'])
         return recurse(element.form, result, contentPath)
+      } else if (predicate.component(element)) {
+        elementPath = path.concat(['content', index])
+        if (element.hasOwnProperty('heading')) {
+          heading = element.heading
+          result = withPath(result, 'headings', heading, elementPath)
+        }
+        result.components.push(
+          [
+            {
+              repository: element.repository,
+              publisher: element.publisher,
+              project: element.project,
+              edition: element.edition,
+              upgrade: element.upgrade,
+              substitutions: clone(element.substitutions)
+            },
+            elementPath
+          ]
+        )
+        return result
       } else {
         throw new Error('Invalid form content object')
       }
@@ -63,16 +85,32 @@ var analyze = function recurse (form, result, path) {
   }, result)
 }
 
+function sortComponents (a, b) {
+  var keyOrder = ['repository', 'publisher', 'project', 'edition']
+  for (var index = 0; index < keyOrder.length; index++) {
+    var key = keyOrder[index]
+    var comparison = a[0][key].localeCompare(b[0][key])
+    if (comparison === 0 && index < (keyOrder.length - 1)) {
+      continue
+    } else {
+      return comparison
+    }
+  }
+}
+
 module.exports = function (form) {
-  return analyze(
+  var result = analyze(
     form,
     {
       definitions: {},
       uses: {},
       headings: {},
       references: {},
-      blanks: []
+      blanks: [],
+      components: []
     },
     []
   )
+  result.components.sort(sortComponents)
+  return result
 }

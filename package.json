@@ -6,7 +6,8 @@
   "bugs": "https://github.com/commonform/commonform-analyze/issues",
   "dependencies": {
     "array-find": "^1.0.0",
-    "commonform-predicate": "^2.0.0"
+    "commonform-predicate": "^2.0.0",
+    "stringify-clone": "^2.0.0"
   },
   "devDependencies": {
     "defence-cli": "~1.0.1",

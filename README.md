@@ -183,6 +183,45 @@ assert.deepEqual(
 )
 ```
 
+# Components
+
+```javascript
+var component = {
+  repository: 'api.commonform.org',
+  publisher: 'kemitchell',
+  project: 'orthodox-software-copyright-license',
+  edition: '1e',
+  upgrade: 'yes',
+  substitutions: {
+    terms: {
+      'Licensor': 'Vendor',
+      'Licensee': 'Customer',
+      'Program': 'Software'
+    },
+    headings: {
+      'Express Warranties': 'Guarantees'
+    }
+  }
+}
+
+var withHeading = Object.assign(
+  {heading: 'Disclaimer'},
+  component
+)
+
+assert.deepEqual(
+  analyze({content: [withHeading]}).components,
+  [[component, ['content', 0]]],
+  'reports component uses'
+)
+
+assert.deepEqual(
+  analyze({content: [withHeading]}).headings,
+  {Disclaimer: [['content', 0]]},
+  'reports component heading'
+)
+```
+
 # Invalid Content
 
 ```javascript
