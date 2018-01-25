@@ -7,34 +7,29 @@ var analyze = require('commonform-analyze')
 ```javascript
 var assert = require('assert')
 assert.deepEqual(
-  analyze({content: [{blank: ''}]})
-  .blanks,
+  analyze({content: [{blank: ''}]}).blanks,
   [['content', 0]],
   'reports blanks made'
 )
 
 assert.deepEqual(
-  analyze({content: [{form: {content: [{blank: ''}]}}]})
-  .blanks,
+  analyze({content: [{form: {content: [{blank: ''}]}}]}).blanks,
   [['content', 0, 'form', 'content', 0]],
   'reports nested blanks'
 )
 
 assert.deepEqual(
-  analyze({content: [{blank: ''}, {blank: ''}]})
-  .blanks,
+  analyze({content: [{blank: ''}, {blank: ''}]}).blanks,
   [['content', 0], ['content', 1]],
   'reports multiple blanks'
 )
-
 ```
 
 # Definitions
 
 ```javascript
 assert.deepEqual(
-  analyze({content: [{definition: 'Agreement'}]})
-  .definitions,
+  analyze({content: [{definition: 'Agreement'}]}).definitions,
   {Agreement: [['content', 0]]},
   'reports term definitions'
 )
@@ -45,8 +40,7 @@ assert.deepEqual(
       {definition: 'Agreement'},
       {form: {content: [{definition: 'Termination'}]}}
     ]
-  })
-  .definitions,
+  }).definitions,
   {
     Agreement: [['content', 0]],
     Termination: [['content', 1, 'form', 'content', 0]]
@@ -60,8 +54,7 @@ assert.deepEqual(
       {definition: 'Agreement'},
       {definition: 'Agreement'}
     ]
-  })
-  .definitions,
+  }).definitions,
   {
     Agreement: [
       ['content', 0],
@@ -76,8 +69,9 @@ assert.deepEqual(
 
 ```javascript
 assert.deepEqual(
-  analyze({content: [{heading: 'Price', form: {content: ['test']}}]})
-  .headings,
+  analyze({
+    content: [{heading: 'Price', form: {content: ['x']}}]
+  }).headings,
   {Price: [['content', 0]]},
   'reports headings used'
 )
@@ -96,8 +90,7 @@ assert.deepEqual(
         }
       }
     ]
-  })
-  .headings,
+  }).headings,
   {Price: [['content', 0, 'form', 'content', 0]]},
   'reports nested headings'
 )
@@ -108,8 +101,7 @@ assert.deepEqual(
       {heading: 'Price', form: {content: ['test']}},
       {heading: 'Price', form: {content: ['test']}}
     ]
-  })
-  .headings,
+  }).headings,
   {Price: [['content', 0], ['content', 1]]},
   'reports multiple paths for >1'
 )
@@ -119,22 +111,23 @@ assert.deepEqual(
 
 ```javascript
 assert.deepEqual(
-  analyze({content: [{reference: 'Price'}]})
-  .references,
+  analyze({content: [{reference: 'Price'}]}).references,
   {Price: [['content', 0]]},
   'reports references made'
 )
 
 assert.deepEqual(
-  analyze({content: [{form: {content: [{reference: 'Price'}]}}]})
-  .references,
+  analyze({
+    content: [{form: {content: [{reference: 'Price'}]}}]
+  }).references,
   {Price: [['content', 0, 'form', 'content', 0]]},
   'reports nested references'
 )
 
 assert.deepEqual(
-  analyze({content: [{reference: 'Price'}, {reference: 'Price'}]})
-  .references,
+  analyze({
+    content: [{reference: 'Price'}, {reference: 'Price'}]
+  }).references,
   {Price: [['content', 0], ['content', 1]]},
   'reports multiple references'
 )
@@ -144,8 +137,7 @@ assert.deepEqual(
 
 ```javascript
 assert.deepEqual(
-  analyze({content: [{use: 'Agreement'}]})
-  .uses,
+  analyze({content: [{use: 'Agreement'}]}).uses,
   {Agreement: [['content', 0]]},
   'reports term uses'
 )
@@ -156,8 +148,7 @@ assert.deepEqual(
       {use: 'Agreement'},
       {form: {content: [{use: 'Termination'}]}}
     ]
-  })
-  .uses,
+  }).uses,
   {
     Agreement: [['content', 0]],
     Termination: [['content', 1, 'form', 'content', 0]]
@@ -171,8 +162,7 @@ assert.deepEqual(
       {use: 'Agreement'},
       {use: 'Agreement'}
     ]
-  })
-  .uses,
+  }).uses,
   {
     Agreement: [
       ['content', 0],
