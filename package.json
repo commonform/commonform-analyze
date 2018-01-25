@@ -12,7 +12,8 @@
   "devDependencies": {
     "defence-cli": "~1.0.1",
     "replace-require-self": "~1.0.0",
-    "standard": "^8.0.0"
+    "standard": "^8.0.0",
+    "standard-markdown": "^4.0.2"
   },
   "homepage": "https://github.com/commonform/commonform-analyze",
   "keywords": [
@@ -26,6 +27,6 @@
   "repository": "commonform/commonform-analyze",
   "scripts": {
     "test": "defence README.md | replace-require-self | node",
-    "lint": "standard"
+    "lint": "standard && standard-markdown"
   }
 }
