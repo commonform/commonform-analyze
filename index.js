@@ -58,6 +58,7 @@ var analyze = function recurse (form, result, path) {
       // Children
       } else if (predicate.child(element)) {
         elementPath = path.concat('content', index)
+        // Heading, if any
         if (element.hasOwnProperty('heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
@@ -68,6 +69,7 @@ var analyze = function recurse (form, result, path) {
       // Components
       } else if (predicate.component(element)) {
         elementPath = path.concat('content', index)
+        // Heading, if any
         if (element.hasOwnProperty('heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
