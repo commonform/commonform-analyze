@@ -64,6 +64,21 @@ var analyze = function recurse (form, result, path) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
+        var substitutions = element.substitutions
+        Object.keys(substitutions.terms).forEach(function (key) {
+          var substitute = substitutions.terms[key]
+          var substitutePath = path.concat(
+            'content', index, 'substitutions', 'terms', substitute
+          )
+          result = withPath(result, 'uses', substitute, substitutePath)
+        })
+        Object.keys(substitutions.headings).forEach(function (key) {
+          var substitute = substitutions.headings[key]
+          var substitutePath = path.concat(
+            'content', index, 'substitutions', 'headings', substitute
+          )
+          result = withPath(result, 'headings', substitute, substitutePath)
+        })
         result.components.push(
           [
             {

@@ -206,8 +206,8 @@ assert.deepEqual(
 )
 
 assert.deepEqual(
-  analyze({content: [withHeading]}).headings,
-  {Disclaimer: [['content', 0]]},
+  analyze({content: [withHeading]}).headings['Disclaimer'],
+  [['content', 0]],
   'reports component heading'
 )
 ```
