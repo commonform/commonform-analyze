@@ -42,14 +42,20 @@ var analyze = function recurse (form, result, path) {
       var name = find(propertyNames, function (name) {
         return element.hasOwnProperty(name)
       })
+
+      // Blanks
       if (name && name === 'blank') {
         result.blanks.push(path.concat(['content', index]))
         return result
+
+      // Other Content Elements
       } else if (name) {
         plural = name + 's'
         elementPath = path.concat(['content', index])
         target = element[name]
         return withPath(result, plural, target, elementPath)
+
+      // Children
       } else if (predicate.child(element)) {
         elementPath = path.concat(['content', index])
         if (element.hasOwnProperty('heading')) {
@@ -58,12 +64,15 @@ var analyze = function recurse (form, result, path) {
         }
         var contentPath = elementPath.concat(['form'])
         return recurse(element.form, result, contentPath)
+
+      // Components
       } else if (predicate.component(element)) {
         elementPath = path.concat(['content', index])
         if (element.hasOwnProperty('heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
+        // Iterate substitutions, treating them as uses and references.
         var substitutions = element.substitutions
         Object.keys(substitutions.terms).forEach(function (key) {
           var substitute = substitutions.terms[key]
