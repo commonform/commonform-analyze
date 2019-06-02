@@ -3,6 +3,9 @@
   "description": "analyze relationships within Common Forms",
   "version": "3.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "array-find": "^1.0.0",
     "commonform-predicate": "^3.0.1",
