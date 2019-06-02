@@ -1,3 +1,7 @@
+# commonform-analyze
+
+analyze relationships within [Common Forms](https://www.npmjs.com/package/commonform-validate)
+
 ```javascript
 var analyze = require('commonform-analyze')
 ```
