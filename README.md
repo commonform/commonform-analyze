@@ -6,20 +6,20 @@ var analyze = require('commonform-analyze')
 
 ```javascript
 var assert = require('assert')
-assert.deepEqual(
-  analyze({content: [{blank: ''}]}).blanks,
+assert.deepStrictEqual(
+  analyze({ content: [{ blank: '' }] }).blanks,
   [['content', 0]],
   'reports blanks made'
 )
 
-assert.deepEqual(
-  analyze({content: [{form: {content: [{blank: ''}]}}]}).blanks,
+assert.deepStrictEqual(
+  analyze({ content: [{ form: { content: [{ blank: '' }] } }] }).blanks,
   [['content', 0, 'form', 'content', 0]],
   'reports nested blanks'
 )
 
-assert.deepEqual(
-  analyze({content: [{blank: ''}, {blank: ''}]}).blanks,
+assert.deepStrictEqual(
+  analyze({ content: [{ blank: '' }, { blank: '' }] }).blanks,
   [['content', 0], ['content', 1]],
   'reports multiple blanks'
 )
@@ -28,17 +28,17 @@ assert.deepEqual(
 # Definitions
 
 ```javascript
-assert.deepEqual(
-  analyze({content: [{definition: 'Agreement'}]}).definitions,
-  {Agreement: [['content', 0]]},
+assert.deepStrictEqual(
+  analyze({ content: [{ definition: 'Agreement' }] }).definitions,
+  { Agreement: [['content', 0]] },
   'reports term definitions'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
     content: [
-      {definition: 'Agreement'},
-      {form: {content: [{definition: 'Termination'}]}}
+      { definition: 'Agreement' },
+      { form: { content: [{ definition: 'Termination' }] } }
     ]
   }).definitions,
   {
@@ -48,11 +48,11 @@ assert.deepEqual(
   'reports nested definitions'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
     content: [
-      {definition: 'Agreement'},
-      {definition: 'Agreement'}
+      { definition: 'Agreement' },
+      { definition: 'Agreement' }
     ]
   }).definitions,
   {
@@ -68,15 +68,15 @@ assert.deepEqual(
 # Headings
 
 ```javascript
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
-    content: [{heading: 'Price', form: {content: ['x']}}]
+    content: [{ heading: 'Price', form: { content: ['x'] } }]
   }).headings,
-  {Price: [['content', 0]]},
+  { Price: [['content', 0]] },
   'reports headings used'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
     content: [
       {
@@ -84,25 +84,25 @@ assert.deepEqual(
           content: [
             {
               heading: 'Price',
-              form: {content: ['test']}
+              form: { content: ['test'] }
             }
           ]
         }
       }
     ]
   }).headings,
-  {Price: [['content', 0, 'form', 'content', 0]]},
+  { Price: [['content', 0, 'form', 'content', 0]] },
   'reports nested headings'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
     content: [
-      {heading: 'Price', form: {content: ['test']}},
-      {heading: 'Price', form: {content: ['test']}}
+      { heading: 'Price', form: { content: ['test'] } },
+      { heading: 'Price', form: { content: ['test'] } }
     ]
   }).headings,
-  {Price: [['content', 0], ['content', 1]]},
+  { Price: [['content', 0], ['content', 1]] },
   'reports multiple paths for >1'
 )
 ```
@@ -110,25 +110,25 @@ assert.deepEqual(
 # References
 
 ```javascript
-assert.deepEqual(
-  analyze({content: [{reference: 'Price'}]}).references,
-  {Price: [['content', 0]]},
+assert.deepStrictEqual(
+  analyze({ content: [{ reference: 'Price' }] }).references,
+  { Price: [['content', 0]] },
   'reports references made'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
-    content: [{form: {content: [{reference: 'Price'}]}}]
+    content: [{ form: { content: [{ reference: 'Price' }] } }]
   }).references,
-  {Price: [['content', 0, 'form', 'content', 0]]},
+  { Price: [['content', 0, 'form', 'content', 0]] },
   'reports nested references'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
-    content: [{reference: 'Price'}, {reference: 'Price'}]
+    content: [{ reference: 'Price' }, { reference: 'Price' }]
   }).references,
-  {Price: [['content', 0], ['content', 1]]},
+  { Price: [['content', 0], ['content', 1]] },
   'reports multiple references'
 )
 ```
@@ -136,17 +136,17 @@ assert.deepEqual(
 # Uses
 
 ```javascript
-assert.deepEqual(
-  analyze({content: [{use: 'Agreement'}]}).uses,
-  {Agreement: [['content', 0]]},
+assert.deepStrictEqual(
+  analyze({ content: [{ use: 'Agreement' }] }).uses,
+  { Agreement: [['content', 0]] },
   'reports term uses'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
     content: [
-      {use: 'Agreement'},
-      {form: {content: [{use: 'Termination'}]}}
+      { use: 'Agreement' },
+      { form: { content: [{ use: 'Termination' }] } }
     ]
   }).uses,
   {
@@ -156,11 +156,11 @@ assert.deepEqual(
   'reports nested uses'
 )
 
-assert.deepEqual(
+assert.deepStrictEqual(
   analyze({
     content: [
-      {use: 'Agreement'},
-      {use: 'Agreement'}
+      { use: 'Agreement' },
+      { use: 'Agreement' }
     ]
   }).uses,
   {
@@ -169,7 +169,7 @@ assert.deepEqual(
       ['content', 1]
     ]
   },
- 'reports multiple paths for >1 uses'
+  'reports multiple paths for >1 uses'
 )
 ```
 
@@ -195,18 +195,18 @@ var component = {
 }
 
 var withHeading = Object.assign(
-  {heading: 'Disclaimer'},
+  { heading: 'Disclaimer' },
   component
 )
 
-assert.deepEqual(
-  analyze({content: [withHeading]}).components,
+assert.deepStrictEqual(
+  analyze({ content: [withHeading] }).components,
   [[component, ['content', 0]]],
   'reports component uses'
 )
 
-assert.deepEqual(
-  analyze({content: [withHeading]}).headings['Disclaimer'],
+assert.deepStrictEqual(
+  analyze({ content: [withHeading] }).headings['Disclaimer'],
   [['content', 0]],
   'reports component heading'
 )
@@ -217,9 +217,9 @@ assert.deepEqual(
 ```javascript
 assert.throws(
   function () {
-    analyze({content: [{invalid: 'object'}]})
+    analyze({ content: [{ invalid: 'object' }] })
   },
-  'Invalid form content object',
+  /Invalid form content object/,
   'throws an error for invalid content'
 )
 ```
