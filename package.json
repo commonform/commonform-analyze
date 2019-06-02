@@ -7,7 +7,6 @@
     "index.js"
   ],
   "dependencies": {
-    "array-find": "^1.0.0",
     "commonform-predicate": "^3.0.1"
   },
   "devDependencies": {

@@ -1,5 +1,4 @@
 var predicate = require('commonform-predicate')
-var find = require('array-find')
 
 var withPath = function (result, type, key, path) {
   var hasType = result.hasOwnProperty(type)
@@ -22,7 +21,7 @@ var analyze = function recurse (form, result, path) {
     if (predicate.text(element)) {
       return result
     } else {
-      var name = find(propertyNames, function (name) {
+      var name = propertyNames.find(function (name) {
         return element.hasOwnProperty(name)
       })
 
