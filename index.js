@@ -1,4 +1,3 @@
-var clone = require('stringify-clone')
 var predicate = require('commonform-predicate')
 var find = require('array-find')
 
@@ -123,4 +122,8 @@ module.exports = function (form) {
   )
   result.components.sort(sortComponents)
   return result
+}
+
+function clone (argument) {
+  return JSON.parse(JSON.stringify(argument))
 }
