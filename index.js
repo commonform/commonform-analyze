@@ -1,8 +1,9 @@
 var predicate = require('commonform-predicate')
+var has = require('has')
 
 var withPath = function (result, type, key, path) {
-  var hasType = result.hasOwnProperty(type)
-  if (hasType && result[type].hasOwnProperty(key)) {
+  var hasType = has(result, type)
+  if (hasType && has(result[type], key)) {
     result[type][key].push(path)
   } else {
     result[type][key] = [path]
@@ -22,7 +23,7 @@ var analyze = function recurse (form, result, path) {
       return result
     } else {
       var name = propertyNames.find(function (name) {
-        return element.hasOwnProperty(name)
+        return has(element, name)
       })
 
       // Blanks
@@ -41,7 +42,7 @@ var analyze = function recurse (form, result, path) {
       } else if (predicate.child(element)) {
         elementPath = path.concat('content', index)
         // Heading, if any
-        if (element.hasOwnProperty('heading')) {
+        if (has(element, 'heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
@@ -52,7 +53,7 @@ var analyze = function recurse (form, result, path) {
       } else if (predicate.component(element)) {
         elementPath = path.concat('content', index)
         // Heading, if any
-        if (element.hasOwnProperty('heading')) {
+        if (has(element, 'heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
