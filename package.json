@@ -7,7 +7,7 @@
     "index.js"
   ],
   "dependencies": {
-    "commonform-predicate": "^3.0.1",
+    "commonform-predicate": "^4.0.0",
     "has": "^1.0.3"
   },
   "devDependencies": {
