@@ -76,11 +76,8 @@ var analyze = function recurse (form, result, path) {
         result.components.push(
           [
             {
-              repository: element.repository,
-              publisher: element.publisher,
-              project: element.project,
-              edition: element.edition,
-              upgrade: element.upgrade,
+              component: element.component,
+              version: element.version,
               substitutions: clone(element.substitutions)
             },
             elementPath
@@ -95,7 +92,7 @@ var analyze = function recurse (form, result, path) {
 }
 
 function sortComponents (a, b) {
-  var keyOrder = ['repository', 'publisher', 'project', 'edition']
+  var keyOrder = ['component', 'version']
   for (var index = 0; index < keyOrder.length; index++) {
     var key = keyOrder[index]
     var comparison = a[0][key].localeCompare(b[0][key])

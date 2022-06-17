@@ -181,11 +181,8 @@ assert.deepStrictEqual(
 
 ```javascript
 var component = {
-  repository: 'api.commonform.org',
-  publisher: 'kemitchell',
-  project: 'orthodox-software-copyright-license',
-  edition: '1e',
-  upgrade: 'yes',
+  component: 'https://example.com/component',
+  version: '1.0.0',
   substitutions: {
     terms: {
       'Licensor': 'Vendor',
@@ -194,7 +191,8 @@ var component = {
     },
     headings: {
       'Express Warranties': 'Guarantees'
-    }
+    },
+    blanks: {}
   }
 }
 
