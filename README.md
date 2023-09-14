@@ -213,15 +213,3 @@ assert.deepStrictEqual(
   'reports component heading'
 )
 ```
-
-# Invalid Content
-
-```javascript
-assert.throws(
-  function () {
-    analyze({ content: [{ invalid: 'object' }] })
-  },
-  /Invalid form content object/,
-  'throws an error for invalid content'
-)
-```

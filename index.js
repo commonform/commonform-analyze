@@ -84,8 +84,6 @@ var analyze = function recurse (form, result, path) {
           ]
         )
         return result
-      } else {
-        throw new Error('Invalid form content object')
       }
     }
   }, result)
