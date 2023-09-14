@@ -84,6 +84,8 @@ var analyze = function recurse (form, result, path) {
           ]
         )
         return result
+      } else {
+        return result
       }
     }
   }, result)
