@@ -213,3 +213,11 @@ assert.deepStrictEqual(
   'reports component heading'
 )
 ```
+
+# Ignores Links
+
+```
+assert.doesNotThrow(() => {
+  analyze({ content: ['test'] })
+}, 'no error')
+```
