@@ -4,6 +4,7 @@
   "version": "7.0.0",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
   "type": "module",
+  "main": "index.js",
   "files": [
     "index.js"
   ],
