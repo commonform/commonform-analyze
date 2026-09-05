@@ -181,7 +181,7 @@ assert.deepStrictEqual(
 # Components
 
 ```javascript
-var component = {
+const component = {
   component: 'https://example.com/component',
   version: '1.0.0',
   substitutions: {
@@ -197,7 +197,7 @@ var component = {
   }
 }
 
-var withHeading = Object.assign(
+const withHeading = Object.assign(
   { heading: 'Disclaimer' },
   component
 )
