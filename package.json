@@ -3,18 +3,15 @@
   "description": "analyze relationships within Common Forms",
   "version": "6.0.1",
   "author": "Kyle E. Mitchell <kyle@kemitchell.com> (http://kemitchell.com)",
+  "type": "module",
   "files": [
     "index.js"
   ],
   "dependencies": {
-    "commonform-predicate": "^4.0.0",
-    "has": "^1.0.3"
+    "commonform-predicate": "^7.0.0"
   },
   "devDependencies": {
-    "defence-cli": "^3.0.1",
-    "replace-require-self": "^1.1.1",
-    "standard": "^14.0.2",
-    "standard-markdown": "^5.0.1"
+    "defence-cli": "^3.0.1"
   },
   "keywords": [
     "contracts",
@@ -26,7 +23,7 @@
   "license": "BlueOak-1.0.0",
   "repository": "commonform/commonform-analyze",
   "scripts": {
-    "test": "defence README.md | replace-require-self | node",
+    "test": "defence README.md | sed \"s!'commonform-analyze'!'./index.js'!\" | node",
     "lint": "standard && standard-markdown"
   }
 }

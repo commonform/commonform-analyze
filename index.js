@@ -1,9 +1,8 @@
-var predicate = require('commonform-predicate')
-var has = require('has')
+import * as predicate from 'commonform-predicate'
 
 var withPath = function (result, type, key, path) {
-  var hasType = has(result, type)
-  if (hasType && has(result[type], key)) {
+  var hasType = Object.hasOwn(result, type)
+  if (hasType && Object.hasOwn(result[type], key)) {
     result[type][key].push(path)
   } else {
     result[type][key] = [path]
@@ -13,7 +12,7 @@ var withPath = function (result, type, key, path) {
 
 var propertyNames = ['definition', 'blank', 'reference', 'use']
 
-var analyze = function recurse (form, result, path) {
+function recurse (form, result, path) {
   return form.content.reduce(function (result, element, index) {
     var elementPath
     var target
@@ -23,7 +22,7 @@ var analyze = function recurse (form, result, path) {
       return result
     } else {
       var name = propertyNames.find(function (name) {
-        return has(element, name)
+        return Object.hasOwn(element, name)
       })
 
       // Blanks
@@ -42,7 +41,7 @@ var analyze = function recurse (form, result, path) {
       } else if (predicate.child(element)) {
         elementPath = path.concat('content', index)
         // Heading, if any
-        if (has(element, 'heading')) {
+        if (Object.hasOwn(element, 'heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
@@ -53,7 +52,7 @@ var analyze = function recurse (form, result, path) {
       } else if (predicate.component(element)) {
         elementPath = path.concat('content', index)
         // Heading, if any
-        if (has(element, 'heading')) {
+        if (Object.hasOwn(element, 'heading')) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
@@ -78,7 +77,7 @@ var analyze = function recurse (form, result, path) {
             {
               component: element.component,
               version: element.version,
-              substitutions: clone(element.substitutions)
+              substitutions: structuredClone(element.substitutions)
             },
             elementPath
           ]
@@ -104,8 +103,8 @@ function sortComponents (a, b) {
   }
 }
 
-module.exports = function (form) {
-  var result = analyze(
+export default function (form) {
+  var result = recurse(
     form,
     {
       definitions: {},
@@ -119,8 +118,4 @@ module.exports = function (form) {
   )
   result.components.sort(sortComponents)
   return result
-}
-
-function clone (argument) {
-  return JSON.parse(JSON.stringify(argument))
 }

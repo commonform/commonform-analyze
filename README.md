@@ -3,13 +3,14 @@
 analyze relationships within [Common Forms](https://www.npmjs.com/package/commonform-validate)
 
 ```javascript
-var analyze = require('commonform-analyze')
+import analyze from 'commonform-analyze';
 ```
 
 # Blanks
 
 ```javascript
-var assert = require('assert')
+import assert from 'node:assert'
+
 assert.deepStrictEqual(
   analyze({ content: [{ blank: '' }] }).blanks,
   [['content', 0]],
