@@ -1,7 +1,7 @@
 import * as predicate from 'commonform-predicate'
 
-var withPath = function (result, type, key, path) {
-  var hasType = Object.hasOwn(result, type)
+const withPath = function (result, type, key, path) {
+  const hasType = Object.hasOwn(result, type)
   if (hasType && Object.hasOwn(result[type], key)) {
     result[type][key].push(path)
   } else {
@@ -10,18 +10,18 @@ var withPath = function (result, type, key, path) {
   return result
 }
 
-var propertyNames = ['definition', 'blank', 'reference', 'use']
+const propertyNames = ['definition', 'blank', 'reference', 'use']
 
 function recurse (form, result, path) {
   return form.content.reduce(function (result, element, index) {
-    var elementPath
-    var target
-    var plural
-    var heading
+    let elementPath
+    let target
+    let plural
+    let heading
     if (predicate.text(element)) {
       return result
     } else {
-      var name = propertyNames.find(function (name) {
+      const name = propertyNames.find(function (name) {
         return Object.hasOwn(element, name)
       })
 
@@ -45,7 +45,7 @@ function recurse (form, result, path) {
           heading = element.heading
           result = withPath(result, 'headings', heading, elementPath)
         }
-        var contentPath = elementPath.concat('form')
+        const contentPath = elementPath.concat('form')
         return recurse(element.form, result, contentPath)
 
       // Components
@@ -57,17 +57,17 @@ function recurse (form, result, path) {
           result = withPath(result, 'headings', heading, elementPath)
         }
         // Iterate substitutions, treating them as uses and references.
-        var substitutions = element.substitutions
+        const substitutions = element.substitutions
         Object.keys(substitutions.terms).forEach(function (key) {
-          var substitute = substitutions.terms[key]
-          var substitutePath = path.concat(
+          const substitute = substitutions.terms[key]
+          const substitutePath = path.concat(
             'content', index, 'substitutions', 'terms', substitute
           )
           result = withPath(result, 'uses', substitute, substitutePath)
         })
         Object.keys(substitutions.headings).forEach(function (key) {
-          var substitute = substitutions.headings[key]
-          var substitutePath = path.concat(
+          const substitute = substitutions.headings[key]
+          const substitutePath = path.concat(
             'content', index, 'substitutions', 'headings', substitute
           )
           result = withPath(result, 'headings', substitute, substitutePath)
@@ -91,10 +91,10 @@ function recurse (form, result, path) {
 }
 
 function sortComponents (a, b) {
-  var keyOrder = ['component', 'version']
-  for (var index = 0; index < keyOrder.length; index++) {
-    var key = keyOrder[index]
-    var comparison = a[0][key].localeCompare(b[0][key])
+  const keyOrder = ['component', 'version']
+  for (let index = 0; index < keyOrder.length; index++) {
+    const key = keyOrder[index]
+    const comparison = a[0][key].localeCompare(b[0][key])
     if (comparison === 0 && index < (keyOrder.length - 1)) {
       continue
     } else {
@@ -104,7 +104,7 @@ function sortComponents (a, b) {
 }
 
 export default function (form) {
-  var result = recurse(
+  const result = recurse(
     form,
     {
       definitions: {},
